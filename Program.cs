@@ -11,9 +11,6 @@ namespace BasicGroceryApp
     {
         static void Main(string[] args)
         {
-
-            MeatProd beef = new MeatProd("beef", 2, 5);
-
             GroceryMart groceryMart = new GroceryMart();
             groceryMart.Add(new MeatProd("beef", 2, 5));
             groceryMart.Add(new MeatProd("chicken", 4, 6));

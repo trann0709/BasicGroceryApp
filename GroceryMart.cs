@@ -7,6 +7,7 @@ namespace BasicGroceryApp
     {
         // Fields
         private Dictionary<string, HashSet<string>> _allItems;
+        private ScreenDisplay _screenDisplay;
 
         // Properties
         public Dictionary<string, HashSet<string>> AllItems
@@ -21,6 +22,7 @@ namespace BasicGroceryApp
         public GroceryMart()
         {
             this._allItems = new Dictionary<string, HashSet<string>>();
+            this._screenDisplay = new ScreenDisplay();
         }
 
         public void Add(Product prod)
@@ -34,16 +36,16 @@ namespace BasicGroceryApp
 
         public void Display()
         {
-            foreach (var item in this._allItems)
-            {
-                Console.Write(item.Key + ": ");
-                foreach (var p in item.Value)
-                {
-                    Console.Write(p + ", ");
-                }
-                Console.WriteLine();
-            }
-
+            // foreach (var item in this._allItems)
+            // {
+            //     Console.Write(item.Key + ": ");
+            //     foreach (var p in item.Value)
+            //     {
+            //         Console.Write(p + ", ");
+            //     }
+            //     Console.WriteLine();
+            // }
+            this._screenDisplay.WelcomeMessage();
         }
 
     }
