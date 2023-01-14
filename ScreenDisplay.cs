@@ -61,7 +61,7 @@ namespace BasicGroceryApp
 
         public void DisplayMessage(string message)
         {
-            Console.Write(message);
+            Console.WriteLine(message);
         }
 
 

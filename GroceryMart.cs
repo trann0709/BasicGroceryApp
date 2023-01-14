@@ -9,6 +9,7 @@ namespace BasicGroceryApp
         private Product[][] _allProducts;
         private ScreenDisplay _screenDisplay;
         private UserInput _input;
+        private int _totalAmount;
 
         // Properties 
         public Product[][] AllProducts
@@ -26,6 +27,7 @@ namespace BasicGroceryApp
             this._screenDisplay = new ScreenDisplay();
             this._allProducts = allProducts;
             this._input = new UserInput();
+            this._totalAmount = 0;
         }
 
         public void TurnOn()
@@ -41,7 +43,10 @@ namespace BasicGroceryApp
                 switch (userInput)
                 {
                     case 1:
-                        Console.WriteLine("Option 1");
+                        Console.Clear();
+                        _screenDisplay.MenuSelection(AllProducts);
+                        _screenDisplay.DisplayMessage($"The total is: ${_totalAmount}.");
+                        _screenDisplay.DisplayMessage("Please Select an Item Using Product Number: ");
                         break;
                     case 2:
                         Console.WriteLine("Option 2");
