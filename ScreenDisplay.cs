@@ -26,7 +26,7 @@ namespace BasicGroceryApp
 
         public void MenuSelection()
         {
-            Console.Write(@"
+            Console.WriteLine(@"
 .-----.----------------------------.
 |Press|       Action               |
 |-----|----------------------------|
@@ -61,7 +61,7 @@ namespace BasicGroceryApp
 
         public void DisplayMessage(string message)
         {
-            Console.WriteLine(message);
+            Console.Write(message);
         }
 
 

@@ -17,6 +17,7 @@ namespace BasicGroceryApp
             {
                 allProducts[i] = new Product[3];
             }
+
             allProducts[0][0] = new MeatProd("Beef", 4, 5);
             allProducts[0][1] = new MeatProd("Chicken", 3, 2);
             allProducts[0][2] = new MeatProd("Pork", 0, 3);
@@ -31,7 +32,7 @@ namespace BasicGroceryApp
 
 
             GroceryMart groceryMart = new GroceryMart(allProducts);
-            groceryMart.Display();
+            groceryMart.TurnOn();
         }
     }
 }
