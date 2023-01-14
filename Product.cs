@@ -35,6 +35,10 @@ namespace BasicGroceryApp
             {
                 return _quantity;
             }
+            set
+            {
+                _quantity = value;
+            }
         }
 
         public string Category
