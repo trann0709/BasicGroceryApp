@@ -22,6 +22,11 @@ namespace BasicGroceryApp
             {
                 return -1;
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return -1;
+            }
         }
     }
 }

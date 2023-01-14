@@ -20,7 +20,6 @@ namespace BasicGroceryApp
             }
         }
 
-
         // Constructors 
         public GroceryMart(Product[][] allProducts)
         {
