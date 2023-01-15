@@ -50,6 +50,7 @@ namespace BasicGroceryApp
                         ProductSelection();
                         break;
                     case 2:
+                        Console.Clear();
                         Console.WriteLine("----------Cart----------\n");
                         if (_cart.Count == 0)
                         {
@@ -60,6 +61,29 @@ namespace BasicGroceryApp
                             ShowCart();
                         }
                         Console.WriteLine("\n------------------------");
+                        break;
+                    case 3:
+                        Console.Clear();
+                        break;
+                    case 4:
+                        Console.Clear();
+                        if (_cart.Count == 0)
+                        {
+                            _screenDisplay.DisplayMessage("Thank You for Using Grocery Mart. See You Next Time!\n");
+                            return;
+                        }
+                        else
+                        {
+                            _screenDisplay.DisplayMessage("There're Items in The Cart. Would you like to check out instead?");
+                            _screenDisplay.DisplayMessage("\nPlease Enter 1 for Yes: ");
+                            int resp = _input.GetInput();
+                            if (resp != 1)
+                            {
+                                Console.Clear();
+                                _screenDisplay.DisplayMessage("Thank You for Using Grocery Mart. See You Next Time!\n");
+                                return;
+                            }
+                        }
                         break;
                     default:
                         Console.Clear();
