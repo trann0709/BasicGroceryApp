@@ -9,7 +9,6 @@ namespace BasicGroceryApp
         private string _name;
         private int _quantity;
         private int _price;
-        // private readonly string _category;
         private readonly CategoryItem _category;
 
         // Properties 
