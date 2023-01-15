@@ -64,6 +64,11 @@ namespace BasicGroceryApp
                         break;
                     case 3:
                         Console.Clear();
+                        _screenDisplay.DisplayMessage($"\nYour total is: ${_totalAmount}");
+                        if (_totalAmount > 0)
+                        {
+                            VerifyPaymentt();
+                        }
                         break;
                     case 4:
                         Console.Clear();
@@ -99,6 +104,29 @@ namespace BasicGroceryApp
             AllProducts[r][c].Quantity -= value;
         }
 
+        private void VerifyPaymentt()
+        {
+            while (true)
+            {
+                _screenDisplay.DisplayMessage("\nPlease Enter a Valid $ Amount You Would Like To Pay: $");
+                int payment = _input.GetInput();
+                if (payment >= _totalAmount)
+                {
+                    if (payment > _totalAmount)
+                    {
+                        _screenDisplay.DisplayMessage($"\nHere is your change: ${payment - _totalAmount}");
+                    }
+                    _screenDisplay.DisplayMessage("\nThank You for Shopping with Us! Please Collect Your Items.\n");
+                    // Reset
+                    _totalAmount = 0;
+                    _cart = new Dictionary<Product, int>();
+                    break;
+                }
+
+            }
+
+        }
+
         private void ShowCart()
         {
             foreach (KeyValuePair<Product, int> kvp in _cart)
@@ -106,7 +134,7 @@ namespace BasicGroceryApp
                 kvp.Key.DisplayMessage(kvp.Key, kvp.Value);
                 _totalAmount += kvp.Value * kvp.Key.Price;
             }
-            Console.WriteLine($"\nTOTAL: ${_totalAmount}");
+            _screenDisplay.DisplayMessage($"\nTOTAL: ${_totalAmount}");
         }
 
         private void ProductSelection()
