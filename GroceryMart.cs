@@ -9,12 +9,9 @@ namespace BasicGroceryApp
         private Product[][] _allProducts;
         private ScreenDisplay _screenDisplay;
         private UserInput _input;
-        // private int _totalAmount;
-        // private Product _item;
+        private Dictionary<Product, int> _cart;
+        private int _totalAmount;
 
-        private Dictionary<string, int> _cart;
-        // private int _row;
-        // private int _col;
 
         // Properties 
         public Product[][] AllProducts
@@ -31,10 +28,8 @@ namespace BasicGroceryApp
             this._screenDisplay = new ScreenDisplay();
             this._allProducts = allProducts;
             this._input = new UserInput();
-            this._cart = new Dictionary<string, int>();
-
-            // this._totalAmount = 0;
-            // this._numItemInCart = 0;
+            this._cart = new Dictionary<Product, int>();
+            this._totalAmount = 0;
         }
 
         public void TurnOn()
@@ -52,12 +47,19 @@ namespace BasicGroceryApp
                     case 1:
                         Console.Clear();
                         _screenDisplay.MenuSelection(AllProducts);
-                        _screenDisplay.DisplayMessage("\nPlease Select an Item Using Product Number: ");
-                        int prodNumber = _input.GetInput();
-                        AddToCart(prodNumber);
+                        ProductSelection();
                         break;
                     case 2:
-                        // _screenDisplay.DisplayMessage($"\nThe total is: ${_totalAmount}.");
+                        Console.WriteLine("----------Cart----------\n");
+                        if (_cart.Count == 0)
+                        {
+                            _screenDisplay.DisplayMessage("\nCart is Empty.\n");
+                        }
+                        else
+                        {
+                            ShowCart();
+                        }
+                        Console.WriteLine("\n------------------------");
                         break;
                     default:
                         Console.Clear();
@@ -73,56 +75,80 @@ namespace BasicGroceryApp
             AllProducts[r][c].Quantity -= value;
         }
 
-        private void AddToCart(int prodNumber)
+        private void ShowCart()
         {
-            int row = prodNumber / 10 - 1;
-            int col = prodNumber % 10 - 1;
-            if (row >= 0 && row <= Enum.GetNames(typeof(CategoryItem)).Length && col >= 0 && col < 3)
+            foreach (KeyValuePair<Product, int> kvp in _cart)
             {
-                Product selectedItem = AllProducts[row][col];
-                if (selectedItem != null && selectedItem.Quantity >= 1)
+                kvp.Key.DisplayMessage(kvp.Key, kvp.Value);
+                _totalAmount += kvp.Value * kvp.Key.Price;
+            }
+            Console.WriteLine($"\nTOTAL: ${_totalAmount}");
+        }
+
+        private void ProductSelection()
+        {
+            while (true)
+            {
+                _screenDisplay.DisplayMessage("\nPlease Select an Item Using Product Number: ");
+                int prodNumber = _input.GetInput();
+                int row = prodNumber / 10 - 1;
+                int col = prodNumber % 10 - 1;
+                if (row >= 0 && row <= Enum.GetNames(typeof(CategoryItem)).Length && col >= 0 && col < 3)
                 {
-                    while (true)
+                    if (AddToCart(row, col))
                     {
-                        _screenDisplay.DisplayMessage("\nPlease enter the quantity: ");
-                        int selectedQuantity = _input.GetInput();
-                        if (selectedQuantity > 0 && selectedQuantity <= selectedItem.Quantity)
-                        {
-                            string unit = selectedItem.Category == "beverages" ? "pack" : "pound";
-                            string s = selectedQuantity > 1 ? "s" : "";
-                            _screenDisplay.DisplayMessage($"\nYou've added {selectedQuantity} {unit}{s} of {selectedItem.Name} to the cart.");
-                            if (!_cart.ContainsKey(selectedItem.Name))
-                            {
-                                _cart[selectedItem.Name] = selectedQuantity;
-                            }
-                            else
-                            {
-                                _cart[selectedItem.Name] += selectedQuantity;
-                            }
-
-                            UpdateQuantity(row, col, selectedQuantity);
-                            break;
-                        }
-                        else
-                        {
-                            _screenDisplay.DisplayMessage("\nPlease Enter a Valid Number.");
-                        }
+                        break;
                     }
-
                 }
                 else
                 {
-                    if (selectedItem == null)
+                    _screenDisplay.DisplayMessage("\nPlease Enter a Valid Product Number.");
+                }
+            }
+        }
+
+        private bool AddToCart(int row, int col)
+        {
+            Product selectedItem = AllProducts[row][col];
+            if (selectedItem != null && selectedItem.Quantity >= 1)
+            {
+                while (true)
+                {
+                    _screenDisplay.DisplayMessage("\nPlease enter the quantity: ");
+                    int selectedQuantity = _input.GetInput();
+                    if (selectedQuantity > 0 && selectedQuantity <= selectedItem.Quantity)
                     {
-                        _screenDisplay.DisplayMessage("\nThere's No Product Associated With The Entered Number.");
+                        string unit = selectedItem.Category == "beverages" ? "pack" : "pound";
+                        string s = selectedQuantity > 1 ? "s" : "";
+                        Console.Clear();
+                        _screenDisplay.DisplayMessage($"\nYou've added {selectedQuantity} {unit}{s} of {selectedItem.Name} to the cart.");
+                        if (!_cart.ContainsKey(selectedItem))
+                        {
+                            _cart[selectedItem] = selectedQuantity;
+                        }
+                        else
+                        {
+                            _cart[selectedItem] += selectedQuantity;
+                        }
+
+                        UpdateQuantity(row, col, selectedQuantity);
+                        return true;
                     }
-                    else _screenDisplay.DisplayMessage($"\nThe Selected Product {selectedItem.Name} is Out of Stock.");
+                    else
+                    {
+                        _screenDisplay.DisplayMessage("\nPlease Enter a Valid Number.");
+                    }
                 }
             }
             else
             {
-                _screenDisplay.DisplayMessage("\nPlease Enter a Valid Product Number");
+                if (selectedItem == null)
+                {
+                    _screenDisplay.DisplayMessage("\nThere's No Product Associated With The Entered Number.");
+                }
+                else _screenDisplay.DisplayMessage($"\nThe Selected Product {selectedItem.Name} is Out of Stock.");
             }
+            return false;
         }
 
     }

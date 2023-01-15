@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BasicGroceryApp
 {
-    class Product
+    abstract class Product
     {
         // Fields
         private string _name;
@@ -73,6 +73,8 @@ namespace BasicGroceryApp
                 Console.WriteLine($"Invalid price tag for {name}");
             }
         }
+
+        public abstract void DisplayMessage(Product prod, int count);
     }
 
 }
