@@ -2,7 +2,7 @@ using System;
 
 namespace BasicGroceryApp
 {
-    public class UserInput
+    class UserInput
     {
         public UserInput()
         {
