@@ -30,5 +30,21 @@ namespace tests
             var result = _userInput.GetInput();
             Assert.AreEqual(result, -1);
         }
+
+        [Test]
+        public void GetInput_InputIsNumberAndString_ReturnMinus1()
+        {
+            Console.SetIn(new StringReader("12abc"));
+            var result = _userInput.GetInput();
+            Assert.AreEqual(result, -1);
+        }
+
+        [Test]
+        public void GetInput_InputIsDouble_ReturnMinus1()
+        {
+            Console.SetIn(new StringReader("1.0"));
+            var result = _userInput.GetInput();
+            Assert.AreEqual(result, -1);
+        }
     }
 }
